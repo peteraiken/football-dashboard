@@ -33,7 +33,7 @@ export default class App extends Component {
                   </Typography>
                   <Typography variant="body2">Won: {player[1].win}</Typography>
                   <Typography variant="body2">
-                    Rate: {player[1].winRate}
+                    Rate: {player[1].winRate * 100}%
                   </Typography>
                 </CardContent>
               </Card>
@@ -53,6 +53,12 @@ export default class App extends Component {
       "https://rb4tape8lh.execute-api.eu-west-1.amazonaws.com/production/stats"
     );
     const stats: Stats = response.data;
-    return Object.entries(stats.players);
+    let playerStats = Object.entries(stats.players);
+
+    // Sorting by descending winrate, and secondary sort by descending games played.
+    playerStats = playerStats.sort(
+      (a, b) => b[1].winRate - a[1].winRate || b[1].played - a[1].played
+    );
+    return playerStats;
   }
 }

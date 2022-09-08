@@ -6,5 +6,5 @@ export interface Stats {
 export interface PlayerStats {
   played: number;
   win: number;
-  winRate: string;
+  winRate: number;
 }
