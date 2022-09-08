@@ -1,54 +1,58 @@
-import React from "react";
-import logo from "./logo.svg";
+import { Card, CardContent, Typography } from "@mui/material";
+import axios from "axios";
+import { Component } from "react";
 import "./App.css";
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { PlayerStats, Stats } from "./models/stats.model";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <Card sx={{ minWidth: 275 }}>
-        <CardContent>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Word of the Day
-          </Typography>
-          <Typography variant="h5" component="div">
-            benevolent
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            adjective
-          </Typography>
-          <Typography variant="body2">
-            well meaning and kindly.
-            <br />
-            {'"a benevolent smile"'}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
-    </div>
-  );
+export default class App extends Component {
+  state = {
+    playerStats: [],
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <p>Thursday Football Dashboard</p>
+        </header>
+        <div className="Card-container">
+          {this.state.playerStats.map((player: [string, PlayerStats]) => {
+            return (
+              <Card
+                key={player[0]}
+                className="Card-body"
+                sx={{ minWidth: 275 }}
+              >
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {player[0]}
+                  </Typography>
+                  <br />
+                  <Typography variant="body2">
+                    Played: {player[1].played}
+                  </Typography>
+                  <Typography variant="body2">Won: {player[1].win}</Typography>
+                  <Typography variant="body2">
+                    Rate: {player[1].winRate}
+                  </Typography>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  async componentDidMount(): Promise<void> {
+    this.setState({ playerStats: await this.getStats() });
+  }
+
+  async getStats() {
+    const response = await axios.get(
+      "https://rb4tape8lh.execute-api.eu-west-1.amazonaws.com/production/stats"
+    );
+    const stats: Stats = response.data;
+    return Object.entries(stats.players);
+  }
 }
-
-export default App;
