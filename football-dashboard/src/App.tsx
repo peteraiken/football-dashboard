@@ -50,7 +50,6 @@ export default class App extends Component {
   }
 
   async getStats() {
-    console.log("pete", process.env);
     const response = await axios.get(
       `https://vbdtrsbhi5.execute-api.eu-west-1.amazonaws.com/production/stats?id=${this.state.id}`
     );

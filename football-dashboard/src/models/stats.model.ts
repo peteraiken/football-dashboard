@@ -1,4 +1,5 @@
 export interface Stats {
+  id: string;
   numberOfGames: number;
   players: { [key: string]: PlayerStats };
 }
