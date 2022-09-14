@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Tab, Tabs, Typography } from "@mui/material";
 import axios from "axios";
 import { Component } from "react";
 import "./App.css";
@@ -11,11 +11,17 @@ export default class App extends Component {
   };
 
   render() {
+    console.log("rendering");
     return (
       <div className="App">
         <header className="App-header">
-          <p>Thursday Football Dashboard</p>
+          <p>Football Dashboard</p>
+          <Tabs value={this.state.id} onChange={this.handleChange} centered>
+            <Tab value="WED" label="Wednesday" />
+            <Tab value="THU" label="Thursday" />
+          </Tabs>
         </header>
+        <button onClick={this.testButton}>test button</button>
         <div className="Card-container">
           {this.state.playerStats.map((player: [string, PlayerStats]) => {
             return (
@@ -46,6 +52,7 @@ export default class App extends Component {
   }
 
   async componentDidMount(): Promise<void> {
+    console.log("mounted");
     this.setState({ playerStats: await this.getStats() });
   }
 
@@ -62,4 +69,15 @@ export default class App extends Component {
     );
     return playerStats;
   }
+
+  handleChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
+    this.setState({
+      id: newValue,
+      playerStats: async this.getStats(),
+    });
+  };
+
+  testButton = (event: any) => {
+    console.log("current state", this.state);
+  };
 }
