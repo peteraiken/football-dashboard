@@ -50,7 +50,7 @@ export default class App extends Component {
 
   async getStats() {
     const response = await axios.get(
-      "https://rb4tape8lh.execute-api.eu-west-1.amazonaws.com/production/stats"
+      `${process.env.API_URL}/stats`
     );
     const stats: Stats = response.data;
     let playerStats = Object.entries(stats.players);
