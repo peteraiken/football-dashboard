@@ -7,6 +7,7 @@ import { PlayerStats, Stats } from "./models/stats.model";
 export default class App extends Component {
   state = {
     playerStats: [],
+    id: "THU",
   };
 
   render() {
@@ -49,9 +50,9 @@ export default class App extends Component {
   }
 
   async getStats() {
-    console.log('pete', process.env);
+    console.log("pete", process.env);
     const response = await axios.get(
-      `https://vbdtrsbhi5.execute-api.eu-west-1.amazonaws.com/production/stats`
+      `https://vbdtrsbhi5.execute-api.eu-west-1.amazonaws.com/production/stats?id=${this.state.id}`
     );
     const stats: Stats = response.data;
     let playerStats = Object.entries(stats.players);
