@@ -51,7 +51,7 @@ export default class App extends Component {
   async getStats() {
     console.log('pete', process.env);
     const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/stats`
+      `https://vbdtrsbhi5.execute-api.eu-west-1.amazonaws.com/production/stats`
     );
     const stats: Stats = response.data;
     let playerStats = Object.entries(stats.players);
