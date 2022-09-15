@@ -49,13 +49,11 @@ export default class App extends Component {
 
   async componentDidMount(): Promise<void> {
     // Get last path parameter for ID.
-    const paths = window.location.pathname
-      .split("/")
-      .filter((path) => path !== "");
-    const id = paths.length > 1 ? paths[paths.length - 1].toUpperCase() : "THU";
+    const params = new URL(window.location.href).searchParams;
+    const id = params.get("id") || "THU";
 
     this.setState({
-      playerStats: await this.getStats(id),
+      playerStats: await this.getStats(id.toUpperCase()),
       id,
     });
   }
@@ -90,8 +88,8 @@ function NavTabs() {
         aria-label="nav tabs example"
         centered
       >
-        <LinkTab value="WED" label="Wednesday" href="/football-dashboard/WED" />
-        <LinkTab value="THU" label="Thursday" href="/football-dashboard/THU" />
+        <LinkTab value="WED" label="Wednesday" href="?id=wed" />
+        <LinkTab value="THU" label="Thursday" href="?id=thu" />
       </Tabs>
     </Box>
   );
