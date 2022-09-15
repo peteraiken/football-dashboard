@@ -1,5 +1,6 @@
-import { Card, CardContent, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Card, CardContent, Tab, Tabs, Typography } from "@mui/material";
 import axios from "axios";
+import React from "react";
 import { Component } from "react";
 import "./App.css";
 import { PlayerStats, Stats } from "./models/stats.model";
@@ -11,17 +12,12 @@ export default class App extends Component {
   };
 
   render() {
-    console.log("rendering");
     return (
       <div className="App">
         <header className="App-header">
           <p>Football Dashboard</p>
-          <Tabs value={this.state.id} onChange={this.handleChange} centered>
-            <Tab value="WED" label="Wednesday" />
-            <Tab value="THU" label="Thursday" />
-          </Tabs>
+          <NavTabs></NavTabs>
         </header>
-        <button onClick={this.testButton}>test button</button>
         <div className="Card-container">
           {this.state.playerStats.map((player: [string, PlayerStats]) => {
             return (
@@ -52,13 +48,21 @@ export default class App extends Component {
   }
 
   async componentDidMount(): Promise<void> {
-    console.log("mounted");
-    this.setState({ playerStats: await this.getStats() });
+    // Get last path parameter for ID.
+    const paths = window.location.pathname
+      .split("/")
+      .filter((path) => path !== "");
+    const id = paths.length > 1 ? paths[paths.length - 1].toUpperCase() : "THU";
+
+    this.setState({
+      playerStats: await this.getStats(id),
+      id,
+    });
   }
 
-  async getStats() {
+  async getStats(id = "THU") {
     const response = await axios.get(
-      `https://vbdtrsbhi5.execute-api.eu-west-1.amazonaws.com/production/stats?id=${this.state.id}`
+      `https://vbdtrsbhi5.execute-api.eu-west-1.amazonaws.com/production/stats?id=${id}`
     );
     const stats: Stats = response.data;
     let playerStats = Object.entries(stats.players);
@@ -69,15 +73,36 @@ export default class App extends Component {
     );
     return playerStats;
   }
+}
 
-  handleChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
-    this.setState({
-      id: newValue,
-      playerStats: async this.getStats(),
-    });
+function NavTabs() {
+  const [value, setValue] = React.useState("THU");
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
   };
 
-  testButton = (event: any) => {
-    console.log("current state", this.state);
-  };
+  return (
+    <Box sx={{ width: "100%" }}>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="nav tabs example"
+        centered
+      >
+        <LinkTab value="WED" label="Wednesday" href="/football-dashboard/WED" />
+        <LinkTab value="THU" label="Thursday" href="/football-dashboard/THU" />
+      </Tabs>
+    </Box>
+  );
+}
+
+interface LinkTabProps {
+  value?: "WED" | "THU";
+  label?: string;
+  href?: string;
+}
+
+function LinkTab(props: LinkTabProps) {
+  return <Tab label={props.label} component="a" href={props.href} />;
 }
