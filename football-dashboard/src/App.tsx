@@ -3,11 +3,17 @@ import axios from "axios";
 import React from "react";
 import { Component } from "react";
 import "./App.css";
+import { Records } from "./models/records.model";
 import { PlayerStats, Stats } from "./models/stats.model";
 
 export default class App extends Component {
-  state = {
+  state: {
+    playerStats: Array<[string, PlayerStats]>;
+    playerRecords: Records;
+    id: "WED" | "THU";
+  } = {
     playerStats: [],
+    playerRecords: {},
     id: "THU",
   };
 
@@ -38,6 +44,9 @@ export default class App extends Component {
                   <Typography variant="body2">
                     Rate: {player[1].winRate * 100}%
                   </Typography>
+                  <Typography variant="body2">
+                    Record: {this.state.playerRecords[player[0]]}
+                  </Typography>
                 </CardContent>
               </Card>
             );
@@ -54,6 +63,7 @@ export default class App extends Component {
 
     this.setState({
       playerStats: await this.getStats(id.toUpperCase()),
+      playerRecords: await this.getRecords(id.toUpperCase()),
       id,
     });
   }
@@ -70,6 +80,14 @@ export default class App extends Component {
       (a, b) => b[1].winRate - a[1].winRate || b[1].played - a[1].played
     );
     return playerStats;
+  }
+
+  async getRecords(id = "THU") {
+    const response = await axios.get(
+      `https://vbdtrsbhi5.execute-api.eu-west-1.amazonaws.com/production/records?id=${id}`
+    );
+    const records: Records = response.data;
+    return records;
   }
 }
 
