@@ -24,6 +24,10 @@ export default class App extends Component {
           <p>Football Dashboard</p>
           <NavTabs></NavTabs>
         </header>
+        <h4>
+          Note that results show data from the start of 2023 only, and only for
+          players for whom data exists for 3 or more games.
+        </h4>
         <div className="Card-container">
           {this.state.playerStats.map((player: [string, PlayerStats]) => {
             return (
@@ -61,17 +65,22 @@ export default class App extends Component {
     const params = new URL(window.location.href).searchParams;
     const id = params.get("id") || "THU";
 
+    // Just getting data after start of year 2023.
     this.setState({
-      playerStats: await this.getStats(id.toUpperCase()),
-      playerRecords: await this.getRecords(id.toUpperCase()),
+      playerStats: await this.getStats(id.toUpperCase(), "2023-01-01"),
+      playerRecords: await this.getRecords(id.toUpperCase(), "2023-01-01"),
       id,
     });
   }
 
-  async getStats(id = "THU") {
-    const response = await axios.get(
+  async getStats(id = "THU", dateStart?: string, dateEnd?: string) {
+    let url = new URL(
       `https://vbdtrsbhi5.execute-api.eu-west-1.amazonaws.com/production/stats?id=${id}`
     );
+    if (dateStart) url.searchParams.set("start", dateStart);
+    if (dateEnd) url.searchParams.set("end", dateEnd);
+    const response = await axios.get(url.toString());
+
     const stats: Stats = response.data;
     let playerStats = Object.entries(stats.players);
 
@@ -82,10 +91,13 @@ export default class App extends Component {
     return playerStats;
   }
 
-  async getRecords(id = "THU") {
-    const response = await axios.get(
+  async getRecords(id = "THU", dateStart?: string, dateEnd?: string) {
+    let url = new URL(
       `https://vbdtrsbhi5.execute-api.eu-west-1.amazonaws.com/production/records?id=${id}`
     );
+    if (dateStart) url.searchParams.set("start", dateStart);
+    if (dateEnd) url.searchParams.set("end", dateEnd);
+    const response = await axios.get(url.toString());
     const records: Records = response.data;
     return records;
   }
