@@ -86,7 +86,7 @@ export default class App extends Component {
 
     // Sorting by descending winrate, and secondary sort by descending games played.
     playerStats = playerStats
-      .sort((a, b) => b[1].played - a[1].played || b[1].winRate - a[1].winRate)
+      .sort((a, b) => b[1].winRate - a[1].winRate || b[1].played - a[1].played)
       .filter((stat) => stat[1].played >= 3);
     return playerStats;
   }
