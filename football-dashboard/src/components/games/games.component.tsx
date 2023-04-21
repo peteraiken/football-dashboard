@@ -15,11 +15,25 @@ export const Games = () => {
       <div className="Card-container">
         {games.map((game: Game) => {
           return (
-            <Card key={game.slot} className="Card-body" sx={{ minWidth: 275 }}>
+            <Card
+              key={game.slot}
+              className="Card-body"
+              sx={{ minWidth: 275 }}
+              style={{
+                backgroundColor: game.winner === "blue" ? "#c4def6" : "#ffbcbc",
+              }}
+            >
               <CardContent>
                 <Typography variant="h5" component="div">
-                  {game.winner}
+                  {formatDate(game.slot)}
                 </Typography>
+                <Typography variant="body2" color="blue">
+                  {game.teams.blue.join(", ")}
+                </Typography>
+                <Typography variant="body2" color="red">
+                  {game.teams.red.join(", ")}
+                </Typography>
+                <Typography variant="body2">Winner: {game.winner}</Typography>
               </CardContent>
             </Card>
           );
@@ -40,5 +54,13 @@ const getGames = async (
   if (dateStart) url.searchParams.set("start", dateStart);
   if (dateEnd) url.searchParams.set("end", dateEnd);
   const response = await axios.get(url.toString());
-  return response.data;
+  const games = response.data as Array<Game>;
+
+  return games.sort(
+    (a, b) => new Date(b.slot).getTime() - new Date(a.slot).getTime()
+  );
+};
+
+const formatDate = (date: string): string => {
+  return new Date(date).toDateString();
 };

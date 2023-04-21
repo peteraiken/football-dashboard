@@ -62,8 +62,16 @@ function NavTabs() {
         aria-label="nav tabs example"
         centered
       >
-        <LinkTab value="GAMES" label="Games" href="/#/games" />
-        <LinkTab value="PLAYERS" label="Players" href="/#/players" />
+        <LinkTab
+          value="GAMES"
+          label="Games"
+          href="/football-dashboard/#/games"
+        />
+        <LinkTab
+          value="PLAYERS"
+          label="Players"
+          href="/football-dashboard/#/players"
+        />
       </Tabs>
     </Box>
   );
