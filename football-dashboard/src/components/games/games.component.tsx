@@ -34,6 +34,9 @@ export const Games = () => {
                   {formatPlayerList(game.teams.red)}
                 </Typography>
                 <Typography variant="body2">Winner: {game.winner}</Typography>
+                {game.score && (
+                  <Typography variant="body2">Score: {game.score}</Typography>
+                )}
               </CardContent>
             </Card>
           );

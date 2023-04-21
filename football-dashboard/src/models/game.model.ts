@@ -5,4 +5,5 @@ export interface Game {
   teams: Teams;
   slot: string;
   id: "WED" | "THU";
+  score: number;
 }
