@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/football-dashboard/static/css/main.fe0cbec7.css",
-    "main.js": "/football-dashboard/static/js/main.2fccc664.js",
+    "main.js": "/football-dashboard/static/js/main.e2162292.js",
     "static/media/roboto-all-500-normal.woff": "/football-dashboard/static/media/roboto-all-500-normal.0ab669b7a0d19b178f57.woff",
     "static/media/roboto-all-700-normal.woff": "/football-dashboard/static/media/roboto-all-700-normal.a457fde362a540fcadff.woff",
     "static/media/roboto-all-400-normal.woff": "/football-dashboard/static/media/roboto-all-400-normal.c5d001fa922fa66a147f.woff",
@@ -36,10 +36,10 @@
     "static/media/roboto-greek-ext-700-normal.woff2": "/football-dashboard/static/media/roboto-greek-ext-700-normal.bd9854c751441ccc1a70.woff2",
     "index.html": "/football-dashboard/index.html",
     "main.fe0cbec7.css.map": "/football-dashboard/static/css/main.fe0cbec7.css.map",
-    "main.2fccc664.js.map": "/football-dashboard/static/js/main.2fccc664.js.map"
+    "main.e2162292.js.map": "/football-dashboard/static/js/main.e2162292.js.map"
   },
   "entrypoints": [
     "static/css/main.fe0cbec7.css",
-    "static/js/main.2fccc664.js"
+    "static/js/main.e2162292.js"
   ]
 }
