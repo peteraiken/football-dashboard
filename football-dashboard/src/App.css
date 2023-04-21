@@ -43,7 +43,7 @@
   flex-wrap: wrap;
 }
 
-.Card-body {
+.Card-container .Card-body {
   background-color: #e8e8e8;
   margin: 1rem;
 }
