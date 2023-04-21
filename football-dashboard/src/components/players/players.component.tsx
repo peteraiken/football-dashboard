@@ -7,12 +7,15 @@ import "../../App.css";
 import "../../index.css";
 
 export const Players = () => {
+  const [id] = useState<"WED" | "THU">("THU");
   const [stats, setStats] = useState<Array<[string, PlayerStats]>>([]);
   const [records, setRecords] = useState<Records>({});
   useEffect(() => {
-    getPlayerStats().then((response) => setStats(response));
-    getPlayersRecords().then((response) => setRecords(response));
-  }, []);
+    getPlayerStats(id, "2023-01-01").then((response) => setStats(response));
+    getPlayersRecords(id, "2023-01-01").then((response) =>
+      setRecords(response)
+    );
+  }, [id]);
 
   return (
     <div>

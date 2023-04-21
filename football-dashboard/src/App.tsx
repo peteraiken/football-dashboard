@@ -39,7 +39,7 @@
 //   }
 // }
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import { Players } from "./components/players/players.component";
 import { Box, Tabs, Tab } from "@mui/material";
 import React from "react";
@@ -62,8 +62,8 @@ function NavTabs() {
         aria-label="nav tabs example"
         centered
       >
-        <LinkTab value="GAMES" label="Games" href="/games" />
-        <LinkTab value="PLAYERS" label="Players" href="/players" />
+        <LinkTab value="GAMES" label="Games" href="/#/games" />
+        <LinkTab value="PLAYERS" label="Players" href="/#/players" />
       </Tabs>
     </Box>
   );
@@ -85,10 +85,12 @@ export default function App() {
       <header className="App-header">
         <p>Football Dashboard</p>
         <NavTabs></NavTabs>
+        <Link to="/games">BIG TEST</Link>
       </header>
       <Routes>
-        <Route path="/football-dashboard" element={<Players />} />
-        <Route path="/football-dashboard/players" element={<Players />} />
+        <Route path="/" element={<Players />} />
+        <Route path="/players" element={<Players />} />
+        <Route path="/games" element={<Games />} />
       </Routes>
     </div>
   );
