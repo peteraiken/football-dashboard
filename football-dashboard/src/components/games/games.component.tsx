@@ -27,11 +27,11 @@ export const Games = () => {
                 <Typography variant="h5" component="div">
                   {formatDate(game.slot)}
                 </Typography>
-                <Typography variant="body2" color="blue">
-                  {game.teams.blue.join(", ")}
+                <Typography variant="body2" color="#004dcf">
+                  {formatPlayerList(game.teams.blue)}
                 </Typography>
-                <Typography variant="body2" color="red">
-                  {game.teams.red.join(", ")}
+                <Typography variant="body2" color="#880e10">
+                  {formatPlayerList(game.teams.red)}
                 </Typography>
                 <Typography variant="body2">Winner: {game.winner}</Typography>
               </CardContent>
@@ -63,4 +63,8 @@ const getGames = async (
 
 const formatDate = (date: string): string => {
   return new Date(date).toDateString();
+};
+
+const formatPlayerList = (players: Array<string>): string => {
+  return players.sort().join(", ");
 };
