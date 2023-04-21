@@ -39,7 +39,7 @@
 //   }
 // }
 
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Players } from "./components/players/players.component";
 import { Box, Tabs, Tab } from "@mui/material";
 import React from "react";
@@ -85,7 +85,6 @@ export default function App() {
       <header className="App-header">
         <p>Football Dashboard</p>
         <NavTabs></NavTabs>
-        <Link to="/games">BIG TEST</Link>
       </header>
       <Routes>
         <Route path="/" element={<Players />} />
