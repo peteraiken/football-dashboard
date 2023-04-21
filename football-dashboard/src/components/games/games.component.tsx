@@ -33,10 +33,9 @@ export const Games = () => {
                 <Typography variant="body2" color="#880e10">
                   {formatPlayerList(game.teams.red)}
                 </Typography>
-                <Typography variant="body2">Winner: {game.winner}</Typography>
-                {game.score && (
-                  <Typography variant="body2">Score: {game.score}</Typography>
-                )}
+                <Typography variant="body2">
+                  {formatWinnerText(game.winner, game.score)}
+                </Typography>
               </CardContent>
             </Card>
           );
@@ -70,4 +69,13 @@ const formatDate = (date: string): string => {
 
 const formatPlayerList = (players: Array<string>): string => {
   return players.sort().join(", ");
+};
+
+const formatWinnerText = (winner: string, score?: number): string => {
+  let text = `Winner: ${winner}`;
+  if (score) {
+    text = text + ` (by ${score} goals)`;
+  }
+
+  return text;
 };
